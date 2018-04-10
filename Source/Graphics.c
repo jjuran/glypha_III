@@ -12,6 +12,7 @@
 #include "Externs.h"
 
 #include <Fonts.h>
+#include <MacWindows.h>
 #include <NumberFormatting.h>
 #include <Palettes.h>
 
@@ -69,60 +70,60 @@ void DrawPlatforms (short howMany)
 {
 	if (howMany > 3)			// If there are more than 3 platforms
 	{							// Draw a platform to background pixmap.
-		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
-				&((GrafPtr)backSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(platformSrcMap),
+				GetPortBitMapForCopyBits(backSrcMap),
 				&platformCopyRects[2], &platformCopyRects[7], srcCopy, playRgn);
 								// Draw a platform to work pixmap.
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&platformCopyRects[7], &platformCopyRects[7], srcCopy, playRgn);
 								// Add rectangle to update list to be drawn to screen.
 		AddToUpdateRects(&platformCopyRects[7]);
 								// Ditto for a second platform.
-		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
-				&((GrafPtr)backSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(platformSrcMap),
+				GetPortBitMapForCopyBits(backSrcMap),
 				&platformCopyRects[4], &platformCopyRects[8], srcCopy, playRgn);
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&platformCopyRects[8], &platformCopyRects[8], srcCopy, playRgn);
 		AddToUpdateRects(&platformCopyRects[8]);
 	}
 	else						// If there are 3 or less platforms
 	{
-		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
-				&((GrafPtr)backSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(platformSrcMap),
+				GetPortBitMapForCopyBits(backSrcMap),
 				&platformCopyRects[3], &platformCopyRects[7], srcCopy, playRgn);
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&platformCopyRects[7], &platformCopyRects[7], srcCopy, playRgn);
 		AddToUpdateRects(&platformCopyRects[7]);
 		
-		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
-				&((GrafPtr)backSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(platformSrcMap),
+				GetPortBitMapForCopyBits(backSrcMap),
 				&platformCopyRects[5], &platformCopyRects[8], srcCopy, playRgn);
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&platformCopyRects[8], &platformCopyRects[8], srcCopy, playRgn);
 		AddToUpdateRects(&platformCopyRects[8]);
 	}
 	
 	if (howMany > 5)		// If there are more than 5 platforms
 	{
-		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
-				&((GrafPtr)backSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(platformSrcMap),
+				GetPortBitMapForCopyBits(backSrcMap),
 				&platformCopyRects[0], &platformCopyRects[6], srcCopy, playRgn);
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&platformCopyRects[6], &platformCopyRects[6], srcCopy, playRgn);
 		AddToUpdateRects(&platformCopyRects[6]);
 	}
 	else					// If there are 5 or less platforms
 	{
-		CopyBits(&((GrafPtr)platformSrcMap)->portBits,
-				&((GrafPtr)backSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(platformSrcMap),
+				GetPortBitMapForCopyBits(backSrcMap),
 				&platformCopyRects[1], &platformCopyRects[6], srcCopy, playRgn);
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&platformCopyRects[6], &platformCopyRects[6], srcCopy, playRgn);
 		AddToUpdateRects(&platformCopyRects[6]);
 	}
@@ -148,8 +149,8 @@ void ScrollHelp (short scrollDown)
 		helpSrc.bottom = helpSrc.top + 199;
 	}
 												// Draw "scrolled" help screen.
-	CopyBits(&((GrafPtr)helpSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(helpSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&helpSrc, &helpDest, srcCopy, 0L);
 }
 
@@ -183,12 +184,12 @@ void OpenHelp (void)
 										// lifting up to expose the help screen beneath.
 		
 										// Copy slightly larger help screen.
-		CopyBits(&((GrafPtr)helpSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(helpSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&helpSrc, &helpDest, srcCopy, 0L);
 										// Copy slightly smaller wall graphic.
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&wallSrc, &wallDest, srcCopy, 0L);
 		
 		WaitForNextTick();				// Speed governor.
@@ -217,8 +218,8 @@ void CloseWall (void)
 		wallSrc.bottom++;				// Grow bottom of wall source.
 		wallDest.top--;					// Move down wall dest.
 										// Draw wall coming down.
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&wallSrc, &wallDest, srcCopy, 0L);
 	}									// Note, no speed governing (why bother?).
 }
@@ -303,12 +304,12 @@ void OpenHighScores (void)
 		wallSrc.bottom--;
 		wallDest.top++;
 		
-		CopyBits(&((GrafPtr)workSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(workSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&scoreSrc, &scoreDest, srcCopy, 0L);
 		
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&wallSrc, &wallDest, srcCopy, 0L);
 		
 		WaitForNextTick();
@@ -334,20 +335,20 @@ void UpdateLivesNumbers (void)
 	if ((digit == 0) && ((livesLeft - 1) < 10))
 		digit = 10;						// Use a "blank" space if zero and less than 10.
 										// Draw digit.
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[0], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[0], &numbersDest[0], srcCopy, 0L);
 	
 	digit = (livesLeft - 1) % 10;		// Get 1's digit.
 										// Draw digit.
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[1], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[1], &numbersDest[1], srcCopy, 0L);
 }
 
@@ -368,11 +369,11 @@ void UpdateScoreNumbers (void)
 	if ((digit == 0) && (theScore < 1000000L))
 		digit = 10;					// Use blank space if zero.
 									// Draw digit.
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[2], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[2], &numbersDest[2], srcCopy, 0L);
 	
 	digit = theScore / 10000L;		// Get "tens of thousands" digit.
@@ -386,52 +387,52 @@ void UpdateScoreNumbers (void)
 	if ((digit == 0) && (theScore < 100000L))
 		digit = 10;					// Use blank space if zero.
 									// Draw digit.
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[3], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[3], &numbersDest[3], srcCopy, 0L);
 	
 	digit = theScore / 1000L;		// Handle "thousands" digit.
 	digit = digit % 10L;
 	if ((digit == 0) && (theScore < 10000L))
 		digit = 10;
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[4], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[4], &numbersDest[4], srcCopy, 0L);
 	
 	digit = theScore / 100L;		// Handle 100's digit.
 	digit = digit % 10L;
 	if ((digit == 0) && (theScore < 1000L))
 		digit = 10;
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[5], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[5], &numbersDest[5], srcCopy, 0L);
 	
 	digit = theScore / 10L;			// Handle 10's digit.
 	digit = digit % 10L;
 	if ((digit == 0) && (theScore < 100L))
 		digit = 10;
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[6], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[6], &numbersDest[6], srcCopy, 0L);
 	
 	digit = theScore % 10L;			// Handle 1's digit.
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[7], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[7], &numbersDest[7], srcCopy, 0L);
 }
 
@@ -448,30 +449,30 @@ void UpdateLevelNumbers (void)
 	digit = digit % 10L;
 	if ((digit == 0) && ((levelOn + 1) < 1000))
 		digit = 10;
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[8], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[8], &numbersDest[8], srcCopy, 0L);
 	
 	digit = (levelOn + 1) / 10;			// Do 10's digit.
 	digit = digit % 10L;
 	if ((digit == 0) && ((levelOn + 1) < 100))
 		digit = 10;
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[9], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[9], &numbersDest[9], srcCopy, 0L);
 	
 	digit = (levelOn + 1) % 10;			// Do 1's digit.
-	CopyBits(&((GrafPtr)numberSrcMap)->portBits,
-			&((GrafPtr)backSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(numberSrcMap),
+			GetPortBitMapForCopyBits(backSrcMap),
 			&numbersSrc[digit], &numbersDest[10], srcCopy, 0L);
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&mainWindow->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 			&numbersDest[10], &numbersDest[10], srcCopy, 0L);
 }
 
@@ -524,23 +525,23 @@ void FlashObelisks (Boolean flashThem)
 {	
 	if (flashThem)		// Draw them "inverted"
 	{
-		CopyBits(&((GrafPtr)obeliskSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(obeliskSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&obeliskRects[0], &obeliskRects[2],
 				srcCopy, 0L);
-		CopyBits(&((GrafPtr)obeliskSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(obeliskSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&obeliskRects[1], &obeliskRects[3],
 				srcCopy, 0L);
 	}
 	else			// Draw them "normal"
 	{
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&obeliskRects[2], &obeliskRects[2],
 				srcCopy, 0L);
-		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&mainWindow->portBits,
+		CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+				GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 				&obeliskRects[3], &obeliskRects[3],
 				srcCopy, 0L);
 	}
@@ -584,8 +585,8 @@ void StrikeLightning (void)
 
 void DumpBackToWorkMap (void)
 {
-	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&((GrafPtr)workSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+			GetPortBitMapForCopyBits(workSrcMap),
 			&backSrcRect, &backSrcRect, srcCopy, 0L);
 }
 
@@ -596,8 +597,8 @@ void DumpBackToWorkMap (void)
 
 void DumpMainToWorkMap (void)
 {
-	CopyBits(&mainWindow->portBits,
-			&((GrafPtr)workSrcMap)->portBits,
+	CopyBits(GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
+			GetPortBitMapForCopyBits(workSrcMap),
 			&backSrcRect, &backSrcRect, srcCopy, 0L);
 }
 
@@ -679,16 +680,16 @@ void CheckPlayerWrapAround (void)
 		{
 			src = playerRects[thePlayer.srcNum];
 			src.bottom = src.top + thePlayer.frame;
-			CopyMask(&((GrafPtr)playerSrcMap)->portBits,
-					&((GrafPtr)playerMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(playerSrcMap),
+					GetPortBitMapForCopyBits(playerMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&src, &src, &wrapRect);
 		}
 		else							// Draw second player (not bones).
 		{
-			CopyMask(&((GrafPtr)playerSrcMap)->portBits,
-					&((GrafPtr)playerMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(playerSrcMap),
+					GetPortBitMapForCopyBits(playerMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&playerRects[thePlayer.srcNum],
 					&playerRects[thePlayer.srcNum],
 					&wrapRect);
@@ -711,16 +712,16 @@ void CheckPlayerWrapAround (void)
 		{
 			src = playerRects[thePlayer.srcNum];
 			src.bottom = src.top + thePlayer.frame;
-			CopyMask(&((GrafPtr)playerSrcMap)->portBits,
-					&((GrafPtr)playerMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(playerSrcMap),
+					GetPortBitMapForCopyBits(playerMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&src, &src, &wrapRect);
 		}
 		else							// Draw second player (not bones).
 		{
-			CopyMask(&((GrafPtr)playerSrcMap)->portBits,
-					&((GrafPtr)playerMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(playerSrcMap),
+					GetPortBitMapForCopyBits(playerMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&playerRects[thePlayer.srcNum],
 					&playerRects[thePlayer.srcNum],
 					&wrapRect);
@@ -744,15 +745,15 @@ void DrawTorches (void)
 	who = RandomInt(4);
 	if (evenFrame)		// Only draw 1 torch - left on even frames
 	{
-		CopyBits(&((GrafPtr)flameSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(flameSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&flameRects[who], &flameDestRects[0], srcCopy, 0L);
 		AddToUpdateRects(&flameDestRects[0]);
 	}
 	else				// and draw the right torch on odd frames.
 	{					// We do this even/odd thing for speed.  Why draw both?
-		CopyBits(&((GrafPtr)flameSrcMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyBits(GetPortBitMapForCopyBits(flameSrcMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&flameRects[who], &flameDestRects[1], srcCopy, 0L);
 		AddToUpdateRects(&flameDestRects[1]);
 	}
@@ -768,9 +769,9 @@ void DrawHand (void)
 {
 	if (theHand.mode == kOutGrabeth)		// Fingers open.
 	{
-		CopyMask(&((GrafPtr)handSrcMap)->portBits,
-				&((GrafPtr)handMaskMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyMask(GetPortBitMapForCopyBits(handSrcMap),
+				GetPortBitMapForCopyBits(handMaskMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&handRects[0],
 				&handRects[0],
 				&theHand.dest);
@@ -778,9 +779,9 @@ void DrawHand (void)
 	}
 	else if (theHand.mode == kClutching)	// Fingers clenched.
 	{
-		CopyMask(&((GrafPtr)handSrcMap)->portBits,
-				&((GrafPtr)handMaskMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyMask(GetPortBitMapForCopyBits(handSrcMap),
+				GetPortBitMapForCopyBits(handMaskMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&handRects[1],
 				&handRects[1],
 				&theHand.dest);
@@ -796,9 +797,9 @@ void DrawEye (void)
 {
 	if (theEye.mode == kStalking)
 	{
-		CopyMask(&((GrafPtr)eyeSrcMap)->portBits,
-				&((GrafPtr)eyeMaskMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyMask(GetPortBitMapForCopyBits(eyeSrcMap),
+				GetPortBitMapForCopyBits(eyeMaskMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&eyeRects[theEye.srcNum],
 				&eyeRects[theEye.srcNum],
 				&theEye.dest);
@@ -822,22 +823,22 @@ void CopyAllRects (void)
 	{				// Copy new graphics to screen (sphinxes, player, etc.).
 		for (i = 0; i < numUpdateRects1; i++)
 		{
-			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&mainWindow->portBits,
+			CopyBits(GetPortBitMapForCopyBits(workSrcMap),
+					GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
 		}
 					// Patch up old graphics from last frame (old sphinx locations, etc.).
 		for (i = 0; i < numUpdateRects2; i++)
 		{
-			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&mainWindow->portBits,
+			CopyBits(GetPortBitMapForCopyBits(workSrcMap),
+					GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
 		}
 					// Clean up offscreen (get rid of sphinxes, etc.).
 		for (i = 0; i < numUpdateRects1; i++)
 		{
-			CopyBits(&((GrafPtr)backSrcMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
 		}
 		
@@ -848,22 +849,22 @@ void CopyAllRects (void)
 	{				// Copy new graphics to screen (sphinxes, player, etc.).
 		for (i = 0; i < numUpdateRects2; i++)
 		{
-			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&mainWindow->portBits,
+			CopyBits(GetPortBitMapForCopyBits(workSrcMap),
+					GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
 		}
 					// Patch up old graphics from last frame (old sphinx locations, etc.).
 		for (i = 0; i < numUpdateRects1; i++)
 		{
-			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&mainWindow->portBits,
+			CopyBits(GetPortBitMapForCopyBits(workSrcMap),
+					GetPortBitMapForCopyBits(GetWindowPort(mainWindow)),
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
 		}
 					// Clean up offscreen (get rid of sphinxes, etc.).
 		for (i = 0; i < numUpdateRects2; i++)
 		{
-			CopyBits(&((GrafPtr)backSrcMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyBits(GetPortBitMapForCopyBits(backSrcMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
 		}
 		
@@ -887,9 +888,9 @@ void DrawPlayer (void)
 	{			// On even frames, we'll draw the "flashed" graphic of the player.
 				// If you've played Glypha, you notice that the player begins a
 				// game flashing alternately between bones and a normal player.
-		CopyMask(&((GrafPtr)idleSrcMap)->portBits,
-				&((GrafPtr)playerMaskMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyMask(GetPortBitMapForCopyBits(idleSrcMap),
+				GetPortBitMapForCopyBits(playerMaskMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&idleSrcRect,
 				&playerRects[thePlayer.srcNum],
 				&thePlayer.dest);
@@ -898,16 +899,16 @@ void DrawPlayer (void)
 	{			// If the player is dead and a pile of bones
 		src = playerRects[thePlayer.srcNum];
 		src.bottom = src.top + thePlayer.frame;
-		CopyMask(&((GrafPtr)playerSrcMap)->portBits,
-				&((GrafPtr)playerMaskMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyMask(GetPortBitMapForCopyBits(playerSrcMap),
+				GetPortBitMapForCopyBits(playerMaskMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&src, &src, &thePlayer.dest);
 	}
 	else		// Else, if the player is neither idle nor dead
 	{
-		CopyMask(&((GrafPtr)playerSrcMap)->portBits,
-				&((GrafPtr)playerMaskMap)->portBits,
-				&((GrafPtr)workSrcMap)->portBits,
+		CopyMask(GetPortBitMapForCopyBits(playerSrcMap),
+				GetPortBitMapForCopyBits(playerMaskMap),
+				GetPortBitMapForCopyBits(workSrcMap),
 				&playerRects[thePlayer.srcNum],
 				&playerRects[thePlayer.srcNum],
 				&thePlayer.dest);
@@ -949,16 +950,16 @@ void CheckEnemyWrapAround (short who)
 			}
 			else
 				src = eggSrcRect;
-			CopyMask(&((GrafPtr)eggSrcMap)->portBits,
-					&((GrafPtr)eggMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(eggSrcMap),
+					GetPortBitMapForCopyBits(eggMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&src, &src, &wrapRect);
 		}
 		else								// Otherwise, if enemy not an egg
 		{
-			CopyMask(&((GrafPtr)enemyFlySrcMap)->portBits,
-					&((GrafPtr)enemyFlyMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(enemyFlySrcMap),
+					GetPortBitMapForCopyBits(enemyFlyMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&enemyRects[theEnemies[who].srcNum],
 					&enemyRects[theEnemies[who].srcNum],
 					&wrapRect);
@@ -983,16 +984,16 @@ void CheckEnemyWrapAround (short who)
 			}
 			else
 				src = eggSrcRect;
-			CopyMask(&((GrafPtr)eggSrcMap)->portBits,
-					&((GrafPtr)eggMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(eggSrcMap),
+					GetPortBitMapForCopyBits(eggMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&src, &src, &wrapRect);
 		}
 		else
 		{
-			CopyMask(&((GrafPtr)enemyFlySrcMap)->portBits,
-					&((GrafPtr)enemyFlyMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(enemyFlySrcMap),
+					GetPortBitMapForCopyBits(enemyFlyMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&enemyRects[theEnemies[who].srcNum],
 					&enemyRects[theEnemies[who].srcNum],
 					&wrapRect);
@@ -1018,9 +1019,9 @@ void DrawEnemies (void)
 			case kSpawning:				// Spawning enemies are "growing" out of the platform.
 			src = enemyRects[theEnemies[i].srcNum];
 			src.bottom = src.top + theEnemies[i].frame;
-			CopyMask(&((GrafPtr)enemyWalkSrcMap)->portBits,
-					&((GrafPtr)enemyWalkMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(enemyWalkSrcMap),
+					GetPortBitMapForCopyBits(enemyWalkMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&src, &src, &theEnemies[i].dest);
 			AddToUpdateRects(&theEnemies[i].dest);
 										// Don't need to check wrap-around, when enemies
@@ -1031,9 +1032,9 @@ void DrawEnemies (void)
 			break;
 			
 			case kFlying:				// Flying enemies are air borne (gee).
-			CopyMask(&((GrafPtr)enemyFlySrcMap)->portBits,
-					&((GrafPtr)enemyFlyMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(enemyFlySrcMap),
+					GetPortBitMapForCopyBits(enemyFlyMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&enemyRects[theEnemies[i].srcNum], &enemyRects[theEnemies[i].srcNum],
 					&theEnemies[i].dest);
 			AddToUpdateRects(&theEnemies[i].dest);
@@ -1044,9 +1045,9 @@ void DrawEnemies (void)
 			break;
 			
 			case kWalking:				// Walking enemies are walking.  Enemies.
-			CopyMask(&((GrafPtr)enemyWalkSrcMap)->portBits,
-					&((GrafPtr)enemyWalkMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(enemyWalkSrcMap),
+					GetPortBitMapForCopyBits(enemyWalkMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&enemyRects[theEnemies[i].srcNum], &enemyRects[theEnemies[i].srcNum],
 					&theEnemies[i].dest);
 			AddToUpdateRects(&theEnemies[i].dest);
@@ -1058,9 +1059,9 @@ void DrawEnemies (void)
 			break;
 			
 			case kFalling:				// Falling enemies are in fact eggs!
-			CopyMask(&((GrafPtr)eggSrcMap)->portBits,
-					&((GrafPtr)eggMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(eggSrcMap),
+					GetPortBitMapForCopyBits(eggMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&eggSrcRect, &eggSrcRect, &theEnemies[i].dest);
 			AddToUpdateRects(&theEnemies[i].dest);
 			CheckEnemyWrapAround(i);	// Check for wrap around.
@@ -1077,9 +1078,9 @@ void DrawEnemies (void)
 			}
 			else
 				src = eggSrcRect;
-			CopyMask(&((GrafPtr)eggSrcMap)->portBits,
-					&((GrafPtr)eggMaskMap)->portBits,
-					&((GrafPtr)workSrcMap)->portBits,
+			CopyMask(GetPortBitMapForCopyBits(eggSrcMap),
+					GetPortBitMapForCopyBits(eggMaskMap),
+					GetPortBitMapForCopyBits(workSrcMap),
 					&src, &src, &theEnemies[i].dest);
 			AddToUpdateRects(&theEnemies[i].dest);
 			CheckEnemyWrapAround(i);	// Check for wrap around.
