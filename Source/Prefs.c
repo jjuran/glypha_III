@@ -118,6 +118,8 @@ Boolean CreatePrefsFolder (short *systemVolRef)
 
 Boolean GetPrefsFPath6 (short *systemVolRef)
 {
+#if ! TARGET_API_MAC_CARBON
+	
 	Str255		folderName, whoCares;
 	SysEnvRec	thisWorld;
 	CInfoPBRec	catalogInfoPB;
@@ -188,7 +190,9 @@ Boolean GetPrefsFPath6 (short *systemVolRef)
 	
 	*systemVolRef = workingDirPB.ioVRefNum;
 	
-	return(TRUE);
+#endif
+	
+	return ! TARGET_API_MAC_CARBON;
 }
 
 //--------------------------------------------------------------  WritePrefs
@@ -242,6 +246,8 @@ Boolean WritePrefs (long *prefDirID, short *systemVolRef, prefsInfo *thePrefs)
 
 Boolean WritePrefs6 (short *systemVolRef, prefsInfo *thePrefs)
 {
+#if ! TARGET_API_MAC_CARBON
+	
 	OSErr		theErr;
 	short		fileRefNum;
 	long		byteCount;
@@ -272,7 +278,9 @@ Boolean WritePrefs6 (short *systemVolRef, prefsInfo *thePrefs)
 	if (theErr != noErr)
 		RedAlert("\pPrefs FSClose() Error");
 	
-	return(TRUE);
+#endif
+	
+	return ! TARGET_API_MAC_CARBON;
 }
 
 //--------------------------------------------------------------  SavePrefs
@@ -371,6 +379,8 @@ OSErr ReadPrefs (long *prefDirID, short *systemVolRef, prefsInfo *thePrefs)
 
 OSErr ReadPrefs6 (short *systemVolRef, prefsInfo *thePrefs)
 {
+#if ! TARGET_API_MAC_CARBON
+	
 	OSErr		theErr;
 	short		fileRefNum;
 	long		byteCount;
@@ -402,6 +412,10 @@ OSErr ReadPrefs6 (short *systemVolRef, prefsInfo *thePrefs)
 		RedAlert("\pPrefs FSClose() Error");
 	
 	return(theErr);
+	
+#endif
+	
+	return extFSErr;
 }
 
 //--------------------------------------------------------------  DeletePrefs
@@ -441,6 +455,8 @@ Boolean DeletePrefs (long *dirID, short *volRef)
 
 Boolean DeletePrefs6 (short *volRef)
 {
+#if ! TARGET_API_MAC_CARBON
+	
 	Str255		fileName = kPrefFileName;
 	OSErr		theErr;
 	
@@ -449,7 +465,9 @@ Boolean DeletePrefs6 (short *volRef)
 	if (theErr != noErr)
 		return(FALSE);
 	
-	return(TRUE);
+#endif
+	
+	return ! TARGET_API_MAC_CARBON;
 }
 
 //--------------------------------------------------------------  LoadPrefs
