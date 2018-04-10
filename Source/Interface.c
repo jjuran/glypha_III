@@ -10,7 +10,11 @@
 // place before and after an actual game is in play.
 
 #include "Externs.h"
+#include <Devices.h>
+#include <Dialogs.h>
+#include <Menus.h>
 #include <Sound.h>
+#include <ToolUtils.h>
 
 
 #define kAppleMenuID		128

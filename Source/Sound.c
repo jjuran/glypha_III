@@ -14,6 +14,7 @@
 // playing a sound of an even lesser priority.  Make sense?
 
 
+#include <Resources.h>
 #include <Sound.h>
 #include "Externs.h"
 

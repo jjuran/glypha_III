@@ -10,6 +10,9 @@
 // Anyway, this file contains all the drawing routines.
 
 #include "Externs.h"
+
+#include <Fonts.h>
+#include <NumberFormatting.h>
 #include <Palettes.h>
 
 
