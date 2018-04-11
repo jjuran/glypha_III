@@ -149,7 +149,7 @@ void ScrollHelp (short scrollDown)
 	}
 												// Draw "scrolled" help screen.
 	CopyBits(&((GrafPtr)helpSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&helpSrc, &helpDest, srcCopy, 0L);
 }
 
@@ -184,11 +184,11 @@ void OpenHelp (void)
 		
 										// Copy slightly larger help screen.
 		CopyBits(&((GrafPtr)helpSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&helpSrc, &helpDest, srcCopy, 0L);
 										// Copy slightly smaller wall graphic.
 		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&wallSrc, &wallDest, srcCopy, 0L);
 		
 		WaitForNextTick();				// Speed governor.
@@ -218,7 +218,7 @@ void CloseWall (void)
 		wallDest.top--;					// Move down wall dest.
 										// Draw wall coming down.
 		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&wallSrc, &wallDest, srcCopy, 0L);
 	}									// Note, no speed governing (why bother?).
 }
@@ -293,7 +293,7 @@ void OpenHighScores (void)
 	
 	RGBForeColor(&wasColor);						// Restore foreground color.
 	
-	SetPort((GrafPtr)mainWindow);
+	SetPort(mainWindow);
 	
 	for (i = 0; i < 199; i ++)						// Now the standard scroll functions.
 	{
@@ -304,11 +304,11 @@ void OpenHighScores (void)
 		wallDest.top++;
 		
 		CopyBits(&((GrafPtr)workSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&scoreSrc, &scoreDest, srcCopy, 0L);
 		
 		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&wallSrc, &wallDest, srcCopy, 0L);
 		
 		WaitForNextTick();
@@ -338,7 +338,7 @@ void UpdateLivesNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[0], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[0], &numbersDest[0], srcCopy, 0L);
 	
 	digit = (livesLeft - 1) % 10;		// Get 1's digit.
@@ -347,7 +347,7 @@ void UpdateLivesNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[1], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[1], &numbersDest[1], srcCopy, 0L);
 }
 
@@ -372,7 +372,7 @@ void UpdateScoreNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[2], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[2], &numbersDest[2], srcCopy, 0L);
 	
 	digit = theScore / 10000L;		// Get "tens of thousands" digit.
@@ -390,7 +390,7 @@ void UpdateScoreNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[3], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[3], &numbersDest[3], srcCopy, 0L);
 	
 	digit = theScore / 1000L;		// Handle "thousands" digit.
@@ -401,7 +401,7 @@ void UpdateScoreNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[4], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[4], &numbersDest[4], srcCopy, 0L);
 	
 	digit = theScore / 100L;		// Handle 100's digit.
@@ -412,7 +412,7 @@ void UpdateScoreNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[5], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[5], &numbersDest[5], srcCopy, 0L);
 	
 	digit = theScore / 10L;			// Handle 10's digit.
@@ -423,7 +423,7 @@ void UpdateScoreNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[6], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[6], &numbersDest[6], srcCopy, 0L);
 	
 	digit = theScore % 10L;			// Handle 1's digit.
@@ -431,7 +431,7 @@ void UpdateScoreNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[7], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[7], &numbersDest[7], srcCopy, 0L);
 }
 
@@ -452,7 +452,7 @@ void UpdateLevelNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[8], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[8], &numbersDest[8], srcCopy, 0L);
 	
 	digit = (levelOn + 1) / 10;			// Do 10's digit.
@@ -463,7 +463,7 @@ void UpdateLevelNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[9], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[9], &numbersDest[9], srcCopy, 0L);
 	
 	digit = (levelOn + 1) % 10;			// Do 1's digit.
@@ -471,7 +471,7 @@ void UpdateLevelNumbers (void)
 			&((GrafPtr)backSrcMap)->portBits,
 			&numbersSrc[digit], &numbersDest[10], srcCopy, 0L);
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&numbersDest[10], &numbersDest[10], srcCopy, 0L);
 }
 
@@ -525,22 +525,22 @@ void FlashObelisks (Boolean flashThem)
 	if (flashThem)		// Draw them "inverted"
 	{
 		CopyBits(&((GrafPtr)obeliskSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&obeliskRects[0], &obeliskRects[2],
 				srcCopy, 0L);
 		CopyBits(&((GrafPtr)obeliskSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&obeliskRects[1], &obeliskRects[3],
 				srcCopy, 0L);
 	}
 	else			// Draw them "normal"
 	{
 		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&obeliskRects[2], &obeliskRects[2],
 				srcCopy, 0L);
 		CopyBits(&((GrafPtr)backSrcMap)->portBits,
-				&(((GrafPtr)mainWindow)->portBits),
+				&mainWindow->portBits,
 				&obeliskRects[3], &obeliskRects[3],
 				srcCopy, 0L);
 	}
@@ -556,7 +556,7 @@ void StrikeLightning (void)
 {
 	short		i;
 	
-	SetPort((GrafPtr)mainWindow);				// Draw straight to screen.
+	SetPort(mainWindow);						// Draw straight to screen.
 	PenSize(1, 2);								// Use a tall pen.
 	PenMode(patXor);							// Use XOR mode.
 												// Draw lightning bolts with inverted pen.
@@ -596,7 +596,7 @@ void DumpBackToWorkMap (void)
 
 void DumpMainToWorkMap (void)
 {
-	CopyBits(&(((GrafPtr)mainWindow)->portBits),
+	CopyBits(&mainWindow->portBits,
 			&((GrafPtr)workSrcMap)->portBits,
 			&backSrcRect, &backSrcRect, srcCopy, 0L);
 }
@@ -823,14 +823,14 @@ void CopyAllRects (void)
 		for (i = 0; i < numUpdateRects1; i++)
 		{
 			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&(((GrafPtr)mainWindow)->portBits),
+					&mainWindow->portBits,
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
 		}
 					// Patch up old graphics from last frame (old sphinx locations, etc.).
 		for (i = 0; i < numUpdateRects2; i++)
 		{
 			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&(((GrafPtr)mainWindow)->portBits),
+					&mainWindow->portBits,
 					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
 		}
 					// Clean up offscreen (get rid of sphinxes, etc.).
@@ -849,14 +849,14 @@ void CopyAllRects (void)
 		for (i = 0; i < numUpdateRects2; i++)
 		{
 			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&(((GrafPtr)mainWindow)->portBits),
+					&mainWindow->portBits,
 					&updateRects2[i], &updateRects2[i], srcCopy, playRgn);
 		}
 					// Patch up old graphics from last frame (old sphinx locations, etc.).
 		for (i = 0; i < numUpdateRects1; i++)
 		{
 			CopyBits(&((GrafPtr)workSrcMap)->portBits,
-					&(((GrafPtr)mainWindow)->portBits),
+					&mainWindow->portBits,
 					&updateRects1[i], &updateRects1[i], srcCopy, playRgn);
 		}
 					// Clean up offscreen (get rid of sphinxes, etc.).

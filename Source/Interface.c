@@ -119,7 +119,7 @@ void DoAppleMenu (short theItem)
 		GetMenuItemText(appleMenu, theItem, daName);	// Get the name of the item selected.
 		GetPort(&wasPort);						// Remember our port.
 		daNumber = OpenDeskAcc(daName);			// Launch the Desk Accesory.
-		SetPort((GrafPtr)wasPort);				// When we return, restore port.
+		SetPort(wasPort);						// When we return, restore port.
 		break;
 	}
 }
@@ -272,7 +272,7 @@ void DoMenuChoice (long menuChoice)
 void UpdateMainWindow (void)
 {
 	CopyBits(&((GrafPtr)backSrcMap)->portBits,
-			&(((GrafPtr)mainWindow)->portBits),
+			&mainWindow->portBits,
 			&mainWindowRect, &mainWindowRect,
 			srcCopy, 0L);
 }
@@ -422,10 +422,10 @@ void HandleUpdateEvent (EventRecord *theEvent)
 {	
 	if ((WindowPtr)theEvent->message == mainWindow)
 	{
-		SetPort((GrafPtr)mainWindow);		// Don't forget this line, BTW.
-		BeginUpdate((GrafPtr)mainWindow);	// I did once and it took me
+		SetPort(mainWindow);				// Don't forget this line, BTW.
+		BeginUpdate(mainWindow);			// I did once and it took me
 		UpdateMainWindow();					// ages to track down that bug.
-		EndUpdate((GrafPtr)mainWindow);		// Well, it took me a week I think.
+		EndUpdate(mainWindow);				// Well, it took me a week I think.
 		canPlay = TRUE;
 	}
 }
@@ -517,9 +517,9 @@ void DoAbout (void)
 	SetRect(&aboutRect, 0, 0, 325, 318);		// Bring up centered window.
 	CenterRectInRect(&aboutRect, &qd.screenBits.bounds);
 	aboutWindow = GetNewCWindow(129, 0L, kPutInFront);
-	MoveWindow((GrafPtr)aboutWindow, aboutRect.left, aboutRect.top, TRUE);
-	ShowWindow((GrafPtr)aboutWindow);
-	SetPort((GrafPtr)aboutWindow);
+	MoveWindow(aboutWindow, aboutRect.left, aboutRect.top, TRUE);
+	ShowWindow(aboutWindow);
+	SetPort(aboutWindow);
 	LoadGraphic(kAboutPictID);					// Draw About dialog graphic.
 	
 	do											// Make sure button not down
@@ -553,8 +553,8 @@ void DoGameSettings (void)
 	
 	CenterDialog(kGameSettingsDialogID);	// Center dialog, then call up.
 	theDial = GetNewDialog(kGameSettingsDialogID, 0L, kPutInFront);
-	SetPort((GrafPtr)theDial);
-	ShowWindow((GrafPtr)theDial);			// Make visible (after centering).
+	SetPort(theDial);
+	ShowWindow(theDial);			// Make visible (after centering).
 	DrawDefaultButton(theDial);				// Draw border around Okay button.
 	FlushEvents(everyEvent, 0);
 											// Put in a default sound volume.
