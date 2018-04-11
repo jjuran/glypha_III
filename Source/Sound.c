@@ -128,9 +128,6 @@ void PlayExternalSound (short soundID, short priority)
 // of the interupt situation, we need to handle setting A5 to point to our
 // app's A5 and then set it back again.
 
-RoutineDescriptor ExternalCallBackRD =
-		BUILD_ROUTINE_DESCRIPTOR(uppSndCallBackProcInfo, ExternalCallBack);
-
 pascal void ExternalCallBack (SndChannelPtr theChannel, SndCommand *theCommand)
 {
 	long savedA5 = SetA5(theCommand->param2);
@@ -214,7 +211,15 @@ OSErr OpenSoundChannel (void)
 	OSErr		theErr;
 	
 	#if TARGET_RT_MAC_CFM
-		externalCallBackUPP = (SndCallBackUPP) &ExternalCallBackRD;
+		if (! externalCallBackUPP)
+		{
+			externalCallBackUPP = NewSndCallBackUPP(ExternalCallBack);
+			
+			if (! externalCallBackUPP)
+			{
+				return memFullErr;
+			}
+		}
 	#else
 		externalCallBackUPP = &ExternalCallBack;
 	#endif
