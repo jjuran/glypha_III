@@ -96,6 +96,20 @@ void LoadGraphic (short resID)
 
 void CreateOffScreenPixMap (Rect *theRect, CGrafPtr *offScreen)
 {
+#if TARGET_API_MAC_CARBON
+	
+	if (NewGWorld( offScreen, 0, theRect, NULL, thisGDevice, 0 ) != noErr)
+	{
+		RedAlert("\pCouldn't Allocate Enough Memory");
+	}
+	
+	SetGWorld(*offScreen, thisGDevice);
+	ForeColor(blackColor);
+	BackColor(whiteColor);
+	EraseRect(theRect);
+	
+#else
+	
 	CTabHandle	thisColorTable;
 	GDHandle	oldDevice;
 	CGrafPtr	newCGrafPtr;
@@ -143,6 +157,8 @@ void CreateOffScreenPixMap (Rect *theRect, CGrafPtr *offScreen)
 	
 	*offScreen = newCGrafPtr;
 	SetGDevice(oldDevice);
+	
+#endif
 }
 
 //--------------------------------------------------------------  CreateOffScreenBitMap
@@ -152,6 +168,18 @@ void CreateOffScreenPixMap (Rect *theRect, CGrafPtr *offScreen)
 
 void CreateOffScreenBitMap (Rect *theRect, GrafPtr *offScreen)
 {
+#if TARGET_API_MAC_CARBON
+	
+	if (NewGWorld( offScreen, 1, theRect, NULL, NULL, 0 ) != noErr)
+	{
+		RedAlert("\pCouldn't Create Bitmaps");
+	}
+	
+	SetPort(*offScreen);
+	EraseRect(theRect);
+	
+#else
+	
 	GrafPtr		theBWPort;
 	BitMap		theBitMap;	
 	long		theRowBytes;
@@ -171,6 +199,8 @@ void CreateOffScreenBitMap (Rect *theRect, GrafPtr *offScreen)
 	ClipRect(theRect);
 	EraseRect(theRect);
 	*offScreen = theBWPort;
+	
+#endif
 }
 
 //--------------------------------------------------------------  ZeroRectCorner
