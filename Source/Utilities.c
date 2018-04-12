@@ -127,7 +127,6 @@ void CreateOffScreenPixMap (Rect *theRect, CGrafPtr *offScreen)
 			theErr = HandToHand((Handle *)&thisColorTable);
 			(**(*newCGrafPtr).portPixMap).pmTable = thisColorTable;
 			ClipRect(theRect);
-			RectRgn(newCGrafPtr->visRgn, theRect);
 			ForeColor(blackColor);
 			BackColor(whiteColor);
 			EraseRect(theRect);
@@ -171,7 +170,6 @@ void CreateOffScreenBitMap (Rect *theRect, GrafPtr *offScreen)
 		RedAlert("\pCouldn't Create Bitmaps");
 	SetPortBits(&theBitMap);
 	ClipRect(theRect);
-	RectRgn(theBWPort->visRgn, theRect);
 	EraseRect(theRect);
 	*offScreen = theBWPort;
 }
