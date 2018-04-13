@@ -223,13 +223,5 @@ void GetDialogNumFromStr (DialogPtr, short, long *);
 void DisableDialogControl (DialogPtr, short);
 
 
-#define SetSoundVol(level)  \
-	SetDefaultOutputVolume((level) * 0x0100 / 7 * 0x00010001)
-
-#define GetSoundVol(level)  \
-	if (1) { \
-		long volume = 0;                              \
-		GetDefaultOutputVolume( &volume );            \
-		volume += volume >> 16;                       \
-		*(level) = ((short) volume * 7 + 511) / 512;  \
-	} else
+void SetSoundVol(short level);
+void GetSoundVol(short* level);

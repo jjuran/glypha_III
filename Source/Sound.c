@@ -18,6 +18,8 @@
 #include <Sound.h>
 #include "Externs.h"
 
+#include <math.h>
+
 
 #define kMaxSounds				17			// Number of sounds to load.
 #define	kBaseBufferSoundID		1000		// ID of first sound (assumed sequential).
@@ -362,3 +364,18 @@ void KillSound (void)
 	theErr = CloseSoundChannel();	// Close down the sound channels.
 }
 
+void SetSoundVol(short level)
+{
+	short volume = level ? pow(256, level / 7.0) : 0;
+	
+	SetDefaultOutputVolume( volume * 0x00010001 );
+}
+
+void GetSoundVol(short* level)
+{
+	long volume = 0;
+	GetDefaultOutputVolume( &volume );
+	volume += volume >> 16;
+	
+	*level = log((short) volume / 2) / log(256) * 7;
+}
